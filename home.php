@@ -1,6 +1,15 @@
 <!-- دالة لاستدعاء رأس الصفحة -->
 <?php
 get_header();
+
+// شروط اللوب لعرض البوست
+$featured_loop = new WP_Query([
+    'category_name' => 'theory',
+    'posts_per_page' => 1,
+    'offset' => 0,
+    'nopaging' => false,
+]);
+
 ?>
 
             <div class="s-header_scrollMore">
@@ -345,6 +354,11 @@ get_header();
                             the_post(); //post
                     ?>
                         <div class="g-row">
+                            <?php 
+                            // The Loop
+                            if ($featured_loop->have_posts()) :
+                                $featured_loop->the_post();
+                            ?>
                             <div class="g g-sm-6 g-md-12">
                                 <div class="s-courses_item s-course_item-wide js-course-preview js-has-anim" anim-type="fadeIn" anim-delay="5" data-type="Curriculum">
                                     <p class="course_pretitle"><?php /* دالة لعرض التاق */ the_category(', ') ?></p>
@@ -358,6 +372,27 @@ get_header();
                                     </div>
                                 </div>
                             </div>
+                            <?php
+                            endif;
+                            wp_reset_postdata();
+                            ?>
+
+                            <?php // عرض محتوى في بلُكات
+                            $block_loop = new WP_Query([
+                                'category__not_in' => 'theory',
+                                'ignore_sticky_posts' => true,
+                                'posts_per_page' => 4,
+                                'offset' => 0,
+                                'nopaging' => false,
+                            ]);
+                            ?>
+                            <?php 
+                            if ($block_loop->have_posts()) :
+                            ?>
+                                <?php
+                                while ($block_loop->have_posts()) :
+                                    $block_loop->the_post();
+                                ?>
                             <div class="g g-sm-6 g-md-6">
                                 <div class="s-courses_item js-places-hook js-course-preview js-has-anim" anim-type="fadeIn" anim-delay="5" data-type="Accelerator">
                                     <p class="course_pretitle"><?php /* دالة لعرض التاق */ the_category(', ') ?></p>
@@ -374,76 +409,13 @@ get_header();
                                     </div>
                                 </div>
                             </div>
-                            <div class="g g-sm-6 g-md-6">
-                                <div class="s-courses_item js-places-hook js-course-preview js-has-anim" anim-type="fadeIn" anim-delay="5" data-type="Advanced">
-                                    <p class="course_pretitle"><?php /* دالة لعرض التاق */ the_category(', ') ?></p>
-                                    <h3><?php /* دالة لاستدعاء عنوان البوست */ the_title() ?></h3>
-                                    <p data-places="4" class="js-course-places" style="color: #dd3333">Only % seats left.</p>
-                                    <div class="s-courses_item_content">
-                                        <div class="s-courses_item_content_inner">
-                                            <div class="typography-flush-btm">
-                                                <p>Focus on Advanced Level Implant Cases</p>
-                                            </div>
-                                            <span class="course_topic">Membrane Handling</span>
-                                            <span class="course_topic">Bone Replacement Materials</span>
-                                            <span class="course_topic">Internal Sinus Lift</span>
-                                            <span class="course_topic">Bone Spreading</span>
-                                        </div>
-                                        <a href="<?php /* دالة ترجع رابط البوست */ the_permalink() ?>" class="js-show-course btn js-ga-event is-Advanced" ga-action="DisplayForm" ga-cat="Kurs" ga-label="Advanced">REQUEST</a>
-                                        <a href="<?php /* دالة ترجع رابط البوست */ the_permalink() ?>" class="js-show-course-more btn-plain  js-ga-event is-Advanced" ga-action="DisplayInfo" ga-cat="Kurs" ga-label="Advanced">LEARN MORE</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="g g-sm-6 g-md-6">
-                                <div class="s-courses_item js-places-hook js-course-preview js-has-anim" anim-type="fadeIn" anim-delay="5" data-type="Master-Class">
-                                    <p class="course_pretitle"><?php /* دالة لعرض التاق */ the_category(', ') ?></p>
-                                    <h3><?php /* دالة لاستدعاء عنوان البوست */ the_title() ?></h3>
-                                    <p data-places="3" class="js-course-places" style="color: #dd3333">Only % seats left.</p>
-                                    <div class="s-courses_item_content">
-                                        <div class="s-courses_item_content_inner">
-                                            <div class="typography-flush-btm">
-                                                <p>Focus on Very Challenging Implant Cases</p>
-                                            </div>
-                                            <span class="course_topic">Membrane Handling</span>
-                                            <span class="course_topic">Bone Replacement Materials</span>
-                                            <span class="course_topic">Internal Sinus Lift</span>
-                                            <span class="course_topic">Bone Spreading</span>
-                                            <span class="course_topic">External Sinus Lift</span>
-                                            <span class="course_topic">Bone Block</span>
-                                            <span class="course_topic">Soft Tissue Management</span>
-                                            <span class="course_topic">All on 4 OP’s</span>
-                                            <span class="course_topic">Anxiety Patients with ITN</span>
-                                            <span class="course_topic">Navigated Implantation</span>
-                                        </div>
-                                        <a href="<?php /* دالة ترجع رابط البوست */ the_permalink() ?>" class="js-show-course btn js-ga-event is-Master-Class" ga-action="DisplayForm" ga-cat="Kurs" ga-label="Master-Class">REQUEST</a>
-                                        <a href="<?php /* دالة ترجع رابط البوست */ the_permalink() ?>" class="js-show-course-more btn-plain  js-ga-event is-Master-Class" ga-action="DisplayInfo" ga-cat="Kurs" ga-label="Master-Class">LEARN MORE</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="g g-sm-6 g-md-6">
-                                <div class="s-courses_item js-places-hook js-course-preview js-has-anim" anim-type="fadeIn" anim-delay="5" data-type="Implant prosthetics">
-                                    <p class="course_pretitle"><?php /* دالة لعرض التاق */ the_category(', ') ?></p>
-                                    <h3><?php /* دالة لاستدعاء عنوان البوست */ the_title() ?></h3>
-                                    <p data-places="3" class="js-course-places" style="color: #dd3333">Only % seats left.</p>
-                                    <div class="s-courses_item_content">
-                                        <div class="s-courses_item_content_inner">
-                                            <div class="typography-flush-btm">
-                                                <p>Focus on prosthetics</p>
-                                            </div>
-                                            <span class="course_topic">Impression of the exposed implants</span>
-                                            <span class="course_topic">Digital temporomandibular joint measurement</span>
-                                            <span class="course_topic">Functional diagnostics with Zebris</span>
-                                            <span class="course_topic">All on 4 constructions</span>
-                                            <span class="course_topic">Abutment specimens with individual abutments</span>
-                                            <span class="course_topic">Combined working with telescopes and bars</span>
-                                            <span class="course_topic">3D drilling templates</span>
-                                            <span class="course_topic">CAD CAM designs</span>
-                                        </div>
-                                        <a href="<?php /* دالة ترجع رابط البوست */ the_permalink() ?>" class="js-show-course btn js-ga-event is-Implant prosthetics" ga-action="DisplayForm" ga-cat="Kurs" ga-label="Implant prosthetics">REQUEST</a>
-                                        <a href="<?php /* دالة ترجع رابط البوست */ the_permalink() ?>" class="js-show-course-more btn-plain  js-ga-event is-Implant prosthetics" ga-action="DisplayInfo" ga-cat="Kurs" ga-label="Implant prosthetics">LEARN MORE</a>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php
+                                endwhile;
+                                ?>
+                            <?php 
+                            endif;
+                            wp_reset_postdata();
+                            ?>
                         </div>
                         <?php 
                         // End Loop
